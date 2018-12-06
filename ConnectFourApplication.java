@@ -87,9 +87,17 @@ public class ConnectFourApplication extends Application implements Observer
 
     public void update(Observable obs, Object arg)
     {
-        ConnectMove move = (ConnectMove) arg;
-        this.buttons[move.getRow()][move.getColumn()].setText(move.getColour().toString());
-        this.buttons[move.getRow()][move.getColumn()].setDisable(true);
+        try{
+            ConnectMove move = (ConnectMove) arg;
+            int x = move.getRow();
+            int y = move.getColumn();
+            ConnectFourEnum c = move.getColour();
+            this.buttons[x][y] = new ConnectButton(c.toString(), x, y);
+            this.buttons[x][y].setDisable(true);
+        }
+        catch(ClassCastException c){
+            c.printStackTrace();
+        }
     }
 
     /**
@@ -120,3 +128,4 @@ public class ConnectFourApplication extends Application implements Observer
     }
     
 }
+
