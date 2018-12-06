@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
- *
+ * GUI for ConnectFour
  * @author Rafid Dewan
  */
 public class ConnectFourApplication extends Application implements Observer
@@ -26,7 +26,6 @@ public class ConnectFourApplication extends Application implements Observer
     private ConnectFourGame gameEngine;
     private ConnectButton[][] buttons;
     private Point location;
-
     /**
      * Starts the GUI
      * @param primaryStage
@@ -63,7 +62,8 @@ public class ConnectFourApplication extends Application implements Observer
                 try{
                     Button btn = (Button) event.getSource(); //Cast it to a Java FX Button
                     ConnectFourEnum status = gameEngine.takeTurn(location.x, location.y);
-                    if(status == ConnectFourEnum.IN_PROGRESS) box.setText(gameEngine.getTurn().toString());
+                    if(status == ConnectFourEnum.IN_PROGRESS)
+                        box.setText(gameEngine.getTurn().toString());
                     else{
 
                     }
@@ -84,7 +84,11 @@ public class ConnectFourApplication extends Application implements Observer
         primaryStage.show();
     }
 
-
+    /**
+     * Updates the observers
+     * @param obs
+     * @param arg
+     */
     public void update(Observable obs, Object arg)
     {
         try{
@@ -92,7 +96,7 @@ public class ConnectFourApplication extends Application implements Observer
             int x = move.getRow();
             int y = move.getColumn();
             ConnectFourEnum c = move.getColour();
-            this.buttons[x][y] = new ConnectButton(c.toString(), x, y);
+            buttons[x][y].setText(c.toString());
             this.buttons[x][y].setDisable(true);
         }
         catch(ClassCastException c){
@@ -108,11 +112,10 @@ public class ConnectFourApplication extends Application implements Observer
         public void handle(ActionEvent event)
         {
             System.out.println("You've clicked on " + event.getSource());
-            try{
+            try {
                 ConnectButton btn = (ConnectButton) event.getSource(); //Cast it to a ConnectButton object
-                location =  new Point(btn.getRow(), btn.getColumn());
-            }
-            catch (ClassCastException c){
+                location = new Point(btn.getRow(), btn.getColumn());
+            } catch (ClassCastException c) {
                 c.printStackTrace();
             }
         }
@@ -128,4 +131,3 @@ public class ConnectFourApplication extends Application implements Observer
     }
     
 }
-
