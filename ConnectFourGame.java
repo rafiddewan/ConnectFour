@@ -1,13 +1,13 @@
 package sample; //Would like to say, this is the default package IntelliJ gives me when I create a new JavaFX project
 
-import java.util.Observer;
+import java.util.Observable;
 
 /**
  * Assignment #4
  * A simple ConnectFour game (does not do diagonals)
  * @author Rafid Dewan
  */
-public class ConnectFourGame extends Observerable
+public class ConnectFourGame extends Observable
 {
     private int nRows; // Number of Rows in grid
     private int nColumns; //Number of Columns in grid
@@ -107,12 +107,15 @@ public class ConnectFourGame extends Observerable
             if(this.grid[row - 1][column] == ConnectFourEnum.EMPTY)
                 throw new IllegalArgumentException("Row and column is empty at: " + (row -1) + "," + column + ". \nPlease try a different option ");
         }
+        ConnectMove move = new ConnectMove(row, column, this.turn);
         this.grid[row][column] = this.turn;
         this.gameState = findWinner(row, column); //Check to see if game is won/drawn/ongoing
         //used for switching turns
         if (this.turn == ConnectFourEnum.RED) this.turn = ConnectFourEnum.BLACK;
         else this.turn = ConnectFourEnum.RED;
         this.nMarks++;
+        setChanged();
+        notifyObservers(move);
         return this.gameState; //gives an indication where the game is at
     }
 
@@ -184,5 +187,4 @@ public class ConnectFourGame extends Observerable
         }
         return gridPrint; //returns the string of that grid
     }
-
 }

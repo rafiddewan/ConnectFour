@@ -1,5 +1,6 @@
 package sample;
 
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
@@ -24,6 +25,7 @@ public class ConnectFourApplication extends Application implements Observer
     public final static int BUTTON_SIZE = 20;
     private ConnectFourGame gameEngine;
     private ConnectButton[][] buttons;
+    private Point location;
 
     /**
      * Starts the GUI
@@ -34,8 +36,10 @@ public class ConnectFourApplication extends Application implements Observer
     {
         gameEngine = new ConnectFourGame(ConnectFourEnum.BLACK);
         gameEngine.addObserver(this);
+        location = null;
         BorderPane root = new BorderPane();
         TextField box = new TextField("Black Begins");
+        box.setEditable(false);
         GridPane gridPane = new GridPane();
         Button takeTurnBtn = new Button("Take My Turn");
         Scene scene = new Scene(root,510,380);
@@ -53,6 +57,23 @@ public class ConnectFourApplication extends Application implements Observer
                 this.buttons[i][j] = button;
             }
         }
+        takeTurnBtn.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                try{
+                    Button btn = (Button) event.getSource(); //Cast it to a Java FX Button
+                    ConnectFourEnum status = gameEngine.takeTurn(location.x, location.y);
+                    if(status == ConnectFourEnum.IN_PROGRESS) box.setText(gameEngine.getTurn().toString());
+                    else{
+
+                    }
+                }
+                catch (ClassCastException c){
+                    c.printStackTrace();
+                }
+
+            }
+        });
         box.setEditable(false);
         
         root.setTop(box);
@@ -68,6 +89,7 @@ public class ConnectFourApplication extends Application implements Observer
     {
         ConnectMove move = (ConnectMove) arg;
         this.buttons[move.getRow()][move.getColumn()].setText(move.getColour().toString());
+        this.buttons[move.getRow()][move.getColumn()].setDisable(true);
     }
 
     /**
@@ -78,6 +100,13 @@ public class ConnectFourApplication extends Application implements Observer
         public void handle(ActionEvent event)
         {
             System.out.println("You've clicked on " + event.getSource());
+            try{
+                ConnectButton btn = (ConnectButton) event.getSource(); //Cast it to a ConnectButton object
+                location =  new Point(btn.getRow(), btn.getColumn());
+            }
+            catch (ClassCastException c){
+                c.printStackTrace();
+            }
         }
     }
     
