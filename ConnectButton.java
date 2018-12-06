@@ -10,6 +10,7 @@ public class ConnectButton extends Button {
     {
         this.row = row;
         this.column = column;
+        this.setText(label);
     }
 
     public int getRow()
@@ -25,6 +26,6 @@ public class ConnectButton extends Button {
     @Override
     public String toString()
     {
-        return super.toString();
+        return ("(" + getRow() + "," + getColumn() + ")");
     }
 }

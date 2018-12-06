@@ -1,15 +1,14 @@
-package sample;
+package sample; //Would like to say, this is the default package IntelliJ gives me when I create a new JavaFX project
 
 import java.util.Observer;
 
+/**
+ * Assignment #4
+ * A simple ConnectFour game (does not do diagonals)
+ * @author Rafid Dewan
+ */
 public class ConnectFourGame extends Observerable
 {
-
-    /**
-     * Assignment #1
-     * A simple ConnectFour game (does not do diagonals)
-     * @author Rafid Dewan
-     */
     private int nRows; // Number of Rows in grid
     private int nColumns; //Number of Columns in grid
     private int numToWin; //Numbers of characters in a row or column it takes to win
@@ -106,7 +105,7 @@ public class ConnectFourGame extends Observerable
         if(row != 0)
         {
             if(this.grid[row - 1][column] == ConnectFourEnum.EMPTY)
-                throw new IllegalArgumentException("Row and column is empty at: " + this.grid[row + 1][column] + ". \nPlease try a different option ");
+                throw new IllegalArgumentException("Row and column is empty at: " + (row -1) + "," + column + ". \nPlease try a different option ");
         }
         this.grid[row][column] = this.turn;
         this.gameState = findWinner(row, column); //Check to see if game is won/drawn/ongoing
@@ -124,7 +123,7 @@ public class ConnectFourGame extends Observerable
      **/
     private ConnectFourEnum findWinner(int row, int column) {
         ConnectFourEnum thisState = ConnectFourEnum.IN_PROGRESS;
-        if (nMarks == nColumns * nRows) thisState = this.turn;
+        if (nMarks == nColumns * nRows) thisState = ConnectFourEnum.DRAW;
         else {
             int c = 1; //count kept constant checking the rows/columns
             //Check vertical

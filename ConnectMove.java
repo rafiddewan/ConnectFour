@@ -1,32 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package sample;
 
 /**
- *
- * @author Nick
+ * Specifies where the chip is dropped and if it was either red or black's turn
+ * @author Rafid
  */
 public class ConnectMove {
     private int row;
     private int column;
     private ConnectFourEnum colour;
-    
+
+    /**
+     * Constructor for ConnectMove
+     * @param row
+     * @param column
+     * @param colour
+     */
     public ConnectMove(int row, int column, ConnectFourEnum colour){
         this.row = row;
-        this.column=column;
+        this.column = column;
         this.colour = colour;
     }
-    
+
+    /**
+     * Returns the row number
+     * @return int
+     */
     public int getRow(){
         return this.row;
     }
-    
+
+    /**
+     * Returns the column number
+     * @return int
+     */
     public int getColumn(){
         return this.column;
     }
-    
+
+    /**
+     * Returns which colour has moved
+     * @return ConnecFourEnum
+     */
     public ConnectFourEnum getColour(){
         return this.colour;
     }

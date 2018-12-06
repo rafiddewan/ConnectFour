@@ -2,6 +2,10 @@ package sample;
 
 import java.util.Observer;
 
+/**
+ *
+ * @author Rafid
+ */
 public abstract class Observerable
 {
     public void addObserver(Observer observer)
